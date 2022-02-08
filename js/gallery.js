@@ -30,6 +30,7 @@ function animate() {
 	}
 }
 
+
 /************* DO NOT TOUCH CODE ABOVE THIS LINE ***************/
 
 function swapPhoto() {
@@ -73,26 +74,14 @@ $(".details").slideToggle("slow", "linear" );
 var mRequest = new XMLHttpRequest();
 
 // Array holding GalleryImage objects (see below).
-var mImages = [
-  function iterateJSON(mJson)
-  {
-    for(x = 0; x < mJson.images.length; x++)
-    {
-      mImages[x] = new GalleryImage();
-      mImages[x].location = mJson.images[x].imgLocation;
-      mImages[x].description = mJson.images[x].description;
-      mImages[x].date = mJson.images[x].date;
-      mImages[x].img = mJson.images[x].imgPath;
-    }
-  }
-];
+var mImages = [];
 
 // Holds the retrived JSON information
 var mJson;
 
 // URL for the JSON to load by default
 // Some options for you are: images.json, images.short.json; you will need to create your own extra.json later
-var mUrl = 'images.json';
+var mUrl;
 
 function fetchJSON()
 {
@@ -107,6 +96,25 @@ mRequest.open("GET", murl, true);
 mRequest.send();
 }
 
+function iterateJSON(mJson)
+{
+  for(x = 0; x < mJson.images.length; x++)
+  {
+    mImages[x] = new GalleryImage();
+    mImages[x].location = mJson.images[x].imgLocation;
+    mImages[x].description = mJson.images[x].description;
+    mImages[x].date = mJson.images[x].date;
+    mImages[x].img = mJson.images[x].imgPath;
+  }
+}
+
+function makeGalleryImageOnloadCallback(galleryImage) {
+	return function(e) {
+		galleryImage.img = e.target;
+		mImages.push(galleryImage);
+	}
+}
+
 $(document).ready( function() {
 
   $( "#nextPhoto" ).position({
@@ -114,7 +122,6 @@ my: "right bottom",
 at: "right bottom",
 of: "#nav"
 });
-
 
 const urlParams = new URLSearchParams(window.location.search);
 
@@ -126,27 +133,20 @@ if(mUrl == undefined)
 {
   mUrl = 'images.json';
 }
-
+fetchJSON();
 });
 
-
-
-
-
-//You can optionally use the following function as your event callback for loading the source of Images from your json data (for HTMLImageObject).
-//@param A GalleryImage object. Use this method for an event handler for loading a gallery Image object (optional).
-function makeGalleryImageOnloadCallback(galleryImage) {
-	return function(e) {
-		galleryImage.img = e.target;
-		mImages.push(galleryImage);
-	}
-}
 
 window.addEventListener('load', function() {
 
 	console.log('window loaded');
 
 }, false);
+
+
+
+
+
 
 function GalleryImage() {
 
@@ -159,3 +159,7 @@ var date;
 var img;
 
 }
+
+
+//You can optionally use the following function as your event callback for loading the source of Images from your json data (for HTMLImageObject).
+//@param A GalleryImage object. Use this method for an event handler for loading a gallery Image object (optional).
