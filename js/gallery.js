@@ -146,13 +146,9 @@ window.addEventListener('load', function() {
 function GalleryImage() {
 
 var description;
-
 var location;
-
 var date;
-
 var img;
-
 }
 
 
