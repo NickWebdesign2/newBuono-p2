@@ -93,7 +93,7 @@ mRequest.onreadystatechange = function() {
     iterateJSON(mJson);
   }
 }
-mRequest.open("GET", murl, true);
+mRequest.open("GET", mUrl, true);
 mRequest.send();
 }
 

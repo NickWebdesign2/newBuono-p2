@@ -38,6 +38,7 @@ body {
 .thumbnail {
 	position: relative;
 	box-shadow: 1px 3px 20px 0px;
+	max-width: 100%;
 }
 
 
@@ -128,7 +129,7 @@ Make it animate nicely. You'll need CSS3 for this*/
 	-webkit-transition: all 1s ease;
 
 	-o-transition: all 1s ease;
-	
+
 	transition: all 1s ease;
 
 }
